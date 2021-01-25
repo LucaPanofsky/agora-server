@@ -1,0 +1,4 @@
+{:source-paths ["."]
+ :builds {:app {:target :node-library
+                :output-to "../../functions/LOGIN.js"
+                :exports {:handler core/LOGIN}}}}
