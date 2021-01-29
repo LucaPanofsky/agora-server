@@ -43,8 +43,8 @@
 (defn LOGIN [event context callback]
   (let [{:keys [httpMethod body]} (js->clj event :keywordize-keys true)
         event-params (assoc (json->clj body) :method httpMethod)]
-    (js/console.log event)
-    (js/console.log event-params)
+    (println event)
+    (println event-params)
     (if (valid-event? event-params)
       (callback nil (return-response 200 credentials))
       (callback nil (return-response 404 "Invalid request")))))
