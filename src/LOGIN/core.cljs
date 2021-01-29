@@ -3,8 +3,10 @@
              [clojure.string :as str]))
 
 (def headers {:Access-Control-Allow-Origin "*"
-              :Access-Control-Allow-Methods "*"
-              :Access-Control-Allow-Headers "*"})
+              :Access-Control-Allow-Headers "*"
+              :Access-Control-Allow-Credentials true
+              :Access-Control-Allow-Methods "*"})
+
 
 (def repo (.. js/process -env -GITHUB_REPO))
 (def user (.. js/process -env -GITHUB_USERNAME))
@@ -41,6 +43,8 @@
 (defn LOGIN [event context callback]
   (let [{:keys [httpMethod body]} (js->clj event :keywordize-keys true)
         event-params (assoc (json->clj body) :method httpMethod)]
+    (js/console.log event)
+    (js/console.log event-params)
     (if (valid-event? event-params)
       (callback nil (return-response 200 credentials))
       (callback nil (return-response 404 "Invalid request")))))
